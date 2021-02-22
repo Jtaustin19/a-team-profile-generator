@@ -3,12 +3,12 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const questions = require('./src/questions');
-const { writeFile, copyFile, generateHTMl } = require('./src/generate-page.js');
+const { writeFile, copyFile, generateHTML } = require('./src/generate-page.js');
 
 // team[] array that passes to generateHTML function
 let team = [];
 
-const promptUser = () => {
+const promptUser = () => {    
     console.log(`
 ========================
 Add Employee Information
@@ -17,7 +17,7 @@ Add Employee Information
 
     return inquirer
         .prompt(questions)
-        .then((employees) => {
+        .then((employees) => {   
             switch (employees.role) {
                 case 'Manager': {
                     let manager = new Manager();
@@ -26,7 +26,7 @@ Add Employee Information
                     manager.id = employees.id;
                     manager.email = employees.email;
                     manager.office = employees.office;
-                }
+                } 
                 case 'Engineer': {
                     let engineer = new Engineer();
                     engineer.name = employees.name;
@@ -49,26 +49,26 @@ Add Employee Information
 
             if (employees.continue) {
                 return promptUser(employees);
-            }
-            return team;
+            } 
+            return team; 
         });
 };
 
-// initializes application
+// Initializes application
 promptUser()
-.then(data => {
-    return generateHTMl(data);
-})
-.then(pageHTML => {
-    return writeFile(pageHTML);
-})
-.then(writeFileResponse => {
-    console.log(copyFileResponse.message);
-    return copyFile();
-})
-.then(copyFileResponse => {
-    console.log(copyFileResponse.message);
-})
-.catch(err => {
-    console.log(err);
-});
+    .then(data => {
+        return generateHTML(data);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .then(writeFileResponse => {
+        console.log(writeFileResponse.message);
+        return copyFile();
+    })
+    .then(copyFileResponse => {
+        console.log(copyFileResponse.message);
+    })
+    .catch(err => {
+        console.log(err);
+    });
